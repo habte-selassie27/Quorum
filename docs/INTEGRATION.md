@@ -60,6 +60,30 @@ For high-stakes consumers, pin all of:
 
 Do not trust only a human-readable rulebook name.
 
+## Reading from the CLI
+
+The same views are reachable with the GenLayer CLI against the deployed address:
+
+```bash
+export QUORUM_CONTRACT="0x367094ed37C0b0C3fC33F378cFCa0b874f41F473"
+BOOK_ID=1
+
+# pin: capture the hash once, then verify before every sensitive transition
+STANDARD_HASH=$(genlayer call "$QUORUM_CONTRACT" current_standard_hash --args "$BOOK_ID" \
+  | awk '/^Result:/{getline; print; exit}')
+genlayer call "$QUORUM_CONTRACT" is_consistent_for --args "$BOOK_ID" "$STANDARD_HASH"
+
+# inspect the operative standard
+genlayer call "$QUORUM_CONTRACT" get_standard            --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" get_standard_relations  --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" standard_status         --args "$BOOK_ID"
+
+# inspect one disputed edge
+genlayer call "$QUORUM_CONTRACT" relation_between --args 1 3
+```
+
+A consumer contract uses the typed `IQuorum` interface for the same calls; the CLI is for auditing, governance tooling, and manual verification. See [`DEPLOYMENT.md`](../DEPLOYMENT.md#runtime-smoke-sequence) for the full read/write command sheet.
+
 ## Version handling
 
 `revision` changes for any persisted rulebook governance change.

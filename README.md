@@ -228,6 +228,7 @@ See [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md).
 contracts/quorum.py
 tests/test_quorum.py
 scripts/preflight.py
+scripts/smoke.sh
 docs/ARCHITECTURE.md
 docs/CONSENSUS.md
 docs/INTEGRATION.md
@@ -261,6 +262,16 @@ gltest tests/test_quorum.py -v -s
 ```
 
 `tests/test_quorum.py` contains 49 Direct Mode scenarios covering independent validator derivation, symmetric semantic-state convergence, malicious disagreement, lifecycle, malformed outputs, prompt-injection behavior, multi-conflict precedence, blocked-rule graph enrichment, nested supersession/restoration safety, standard status/pinning, and the 24-rule bound.
+
+Live StudioNet smoke test against the deployed contract:
+
+```bash
+export QUORUM_CONTRACT="0x367094ed37C0b0C3fC33F378cFCa0b874f41F473"
+scripts/smoke.sh            # read-only: all 11 view methods
+scripts/smoke.sh --write    # full write lifecycle, then the views (spends fees)
+```
+
+The individual `genlayer write` / `genlayer call` commands for all 6 write and 11 read methods are listed in [`DEPLOYMENT.md`](DEPLOYMENT.md#runtime-smoke-sequence).
 
 ## Deployment
 

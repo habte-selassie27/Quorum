@@ -81,6 +81,106 @@ CLI version: <version>
 ## Runtime smoke sequence
 
 After deployment, use the Studio or CLI to execute the lifecycle in `examples/treasury_rulebook.md`.
+The complete sequence is scripted in [`scripts/smoke.sh`](scripts/smoke.sh):
+
+```bash
+scripts/smoke.sh            # read-only: exercises all 11 view methods
+scripts/smoke.sh --write    # full write lifecycle, then the views (spends fees)
+```
+
+### Setup
+
+```bash
+export QUORUM_CONTRACT="0x367094ed37C0b0C3fC33F378cFCa0b874f41F473"
+BOOK_ID=1
+RULE_A_ID=1
+RULE_B_ID=2
+BLOCKED_RULE_ID=3
+AMENDMENT_RULE_ID=4
+RELATION_ID=1
+
+genlayer network set studionet
+genlayer account use rabby
+genlayer account unlock --account rabby
+
+# wait for finalization, and capture the hash used for pinning
+wait_tx() { genlayer receipt "$1" --status FINALIZED --retries 60 --interval 3000; }
+std_hash() { genlayer call "$QUORUM_CONTRACT" current_standard_hash --args "$1" | awk '/^Result:/{getline; print; exit}'; }
+```
+
+### Write methods
+
+The script waits for each transaction to finalize automatically. When running the commands manually, wait with `wait_tx <TRANSACTION_HASH>` before the next dependent write.
+
+```bash
+# 1. returns rulebook_id (first rulebook on a fresh contract is 1)
+genlayer write "$QUORUM_CONTRACT" create_rulebook \
+  --args "Treasury Constitution" \
+  "Rules governing treasury withdrawals, emergency authority, approvals, and execution constraints for a protocol treasury." \
+  true
+
+# 2. Rule A -> expect ACTIVE
+genlayer write "$QUORUM_CONTRACT" propose_rule \
+  --args "$BOOK_ID" \
+  "A treasury withdrawal must not execute when fewer than three approvals are present." \
+  100 0
+
+# 3. Rule B -> expect ACTIVE
+genlayer write "$QUORUM_CONTRACT" propose_rule \
+  --args "$BOOK_ID" \
+  "Withdrawals above 10000 USD require three approvals before execution." \
+  100 0
+
+# 4. Rule C -> equal-priority CONFLICT, expect BLOCKED (this is BLOCKED_RULE_ID)
+genlayer write "$QUORUM_CONTRACT" propose_rule \
+  --args "$BOOK_ID" \
+  "During an active exploit the security council may execute a withdrawal without three approvals." \
+  100 0
+
+# 5-6. deterministic precedence, no LLM reinterpretation
+genlayer write "$QUORUM_CONTRACT" set_blocked_rule_priority \
+  --args "$BLOCKED_RULE_ID" 200
+
+genlayer write "$QUORUM_CONTRACT" activate_blocked_rule \
+  --args "$BLOCKED_RULE_ID"
+
+# 7. amendment: 4th argument is supersedes_rule_id
+genlayer write "$QUORUM_CONTRACT" propose_rule \
+  --args "$BOOK_ID" \
+  "A treasury withdrawal must not execute when fewer than four approvals are present." \
+  100 "$RULE_A_ID"
+
+# lifecycle: repeal the replacement, then restore the superseded original
+genlayer write "$QUORUM_CONTRACT" repeal_rule --args "$AMENDMENT_RULE_ID"
+genlayer write "$QUORUM_CONTRACT" restore_superseded_rule --args "$RULE_A_ID"
+```
+
+`set_blocked_rule_priority` and `activate_blocked_rule` require a `BLOCKED` rule.
+`restore_superseded_rule` requires a `SUPERSEDED` rule whose replacement is no longer active.
+
+### Read methods
+
+```bash
+genlayer call "$QUORUM_CONTRACT" get_rulebook            --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" get_rule                --args "$RULE_A_ID"
+genlayer call "$QUORUM_CONTRACT" get_relation            --args "$RELATION_ID"
+genlayer call "$QUORUM_CONTRACT" relation_between        --args "$RULE_A_ID" "$BLOCKED_RULE_ID"
+genlayer call "$QUORUM_CONTRACT" get_standard            --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" get_standard_relations  --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" standard_status         --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" blocking_reason         --args "$BLOCKED_RULE_ID"
+genlayer call "$QUORUM_CONTRACT" is_consistent           --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" current_standard_hash   --args "$BOOK_ID"
+
+# pin check using the hash just read
+STANDARD_HASH=$(std_hash "$BOOK_ID")
+genlayer call "$QUORUM_CONTRACT" is_consistent_for --args "$BOOK_ID" "$STANDARD_HASH"
+```
+
+Names were renamed from the earlier sheets: `RULE_GRAPH_CONTRACT` -> `QUORUM_CONTRACT`,
+`get_rule_graph` -> `get_standard`, `get_rule_graph_relations` -> `get_standard_relations`,
+`rule_graph_status` -> `standard_status`, `current_rule_graph_hash` -> `current_standard_hash`,
+`CANON_HASH` -> `STANDARD_HASH`.
 
 Minimum proof should include:
 
@@ -146,6 +246,13 @@ Offline repository preflight:
 
 ```bash
 python scripts/preflight.py
+```
+
+Hosted smoke sequence (read-only by default):
+
+```bash
+scripts/smoke.sh            # all 11 view methods against QUORUM_CONTRACT
+scripts/smoke.sh --write    # full 6-method write lifecycle, then the views
 ```
 
 Hosted network integration can then be added using GenLayer Test once the finalized contract address is known.

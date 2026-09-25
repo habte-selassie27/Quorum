@@ -11,7 +11,8 @@ The official StudioNet deployment is `0x367094ed37C0b0C3fC33F378cFCa0b874f41F473
 deploy tx `0xf9ae9480ba78ee5252b7b3d8eb0267851551d411956f4a43457bf674f6ab01c2`,
 deploy source verified identical to `contracts/quorum.py`.
 Machine-readable proof is recorded under `proof/` and linked from
-`DEPLOYMENT.md`.
+`DEPLOYMENT.md`. The full write/read command sheet and runnable smoke test are
+in `DEPLOYMENT.md` and `scripts/smoke.sh`.
 
 ## Primitive
 
