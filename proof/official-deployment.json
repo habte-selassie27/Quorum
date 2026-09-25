@@ -1,0 +1,19 @@
+{
+  "note": "Official manual StudioNet deployment of the Quorum Intelligent Contract through the GenLayer Studio UI. Deployed source was verified byte-identical to contracts/quorum.py in this repository.",
+  "network": "studionet",
+  "contract_address": "0x367094ed37C0b0C3fC33F378cFCa0b874f41F473",
+  "deployer": "0x04e0353B7218b66D6803725ce7342E6e1225DB1b",
+  "deployment_tx": "0xf9ae9480ba78ee5252b7b3d8eb0267851551d411956f4a43457bf674f6ab01c2",
+  "created_at": "2026-09-25T11:41:22+00:00",
+  "method": "(constructor)",
+  "status": "FINALIZED",
+  "genvm_result": "SUCCESS",
+  "consensus_result": "Accepted",
+  "votes_observed": { "agree": 3, "idle": 2 },
+  "validator_slots": 5,
+  "transactions_on_contract": 1,
+  "source_sha256": "74b0ce915ff51fe7cfc685f1804caa33317109d178296ceac61cf8c001039f53",
+  "deployed_source_matches_repository": true,
+  "explorer": "https://explorer-studio.genlayer.com/address/0x367094ed37C0b0C3fC33F378cFCa0b874f41F473",
+  "studio_import": "https://studio.genlayer.com/?import-contract=0x367094ed37C0b0C3fC33F378cFCa0b874f41F473"
+}

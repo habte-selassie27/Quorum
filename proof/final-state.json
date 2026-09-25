@@ -1,0 +1,17 @@
+{
+  "source_commit": "bd6682d81afa7063d6b595dcdab04d220aed8bbb",
+  "contract_address": "0x67a027446838296FcB3022B376c8ff3873a4566C",
+  "rulebook_id": 1,
+  "active_count": 2,
+  "blocked_count": 0,
+  "resolved_conflicts": 1,
+  "unresolved_conflicts": 0,
+  "standard_status": "RESOLVED_CONFLICTS",
+  "standard_version": 2,
+  "standard_hash": "8b3e00983548ade2b9a799cf960a7b47639def3eb535fa6e4c17649b2e285438",
+  "exact_pin": true,
+  "stale_pin": false,
+  "relation_id": 1,
+  "relation_kind": "CONFLICT",
+  "resolution": "RIGHT_PREVAILS"
+}

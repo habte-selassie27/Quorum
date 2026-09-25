@@ -1,0 +1,24 @@
+{
+  "contract_address": "0x44fB5C44bfB81c2790AC14ab8b4167e25943eCAA",
+  "historical_deployment": true,
+  "rulebook_id": 2,
+  "rule_id": 4,
+  "tx": "0x83e4ce10d9e8c48c44305f974a61abff576767cd2e043b501cef2cdf4f299802",
+  "method": "propose_rule",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "state_after": {
+    "rule_status": "BLOCKED",
+    "active_count": 1,
+    "blocked_count": 1,
+    "relation_id": 2,
+    "relation_kind": "CONFLICT",
+    "conflict_type": "MODAL",
+    "resolution": "UNRESOLVED"
+  },
+  "consensus_summary": {
+    "rounds": 1,
+    "validator_slots": 5,
+    "leader_execution": "SUCCESS"
+  }
+}

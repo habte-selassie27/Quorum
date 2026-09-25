@@ -1,0 +1,11 @@
+{
+  "source_commit": "f3b41089de800e62b8d6a633e7fd9301fa44801d",
+  "historical": true,
+  "note": "Sanitized CLI summary from the superseded deployment; final-source evidence is in final-conflict-consensus.json.",
+  "contract_address": "0x5C7Fbf4f20690F4bDE5B15e773D6eC47aF0E65FA",
+  "tx_hash": "0xea792cfc3973150a318b2fa01bd4e51c52677721012d8b9af860a31ae07a503f",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "execution": "SUCCESS",
+  "rounds": 3
+}

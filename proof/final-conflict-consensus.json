@@ -1,0 +1,17 @@
+{
+  "source_commit": "bd6682d81afa7063d6b595dcdab04d220aed8bbb",
+  "contract_address": "0x67a027446838296FcB3022B376c8ff3873a4566C",
+  "tx_hash": "0x79ffc24bc6f70a2ca1b271851e245c5571586395d8b0e402a369de010b930340",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "execution": "SUCCESS",
+  "rounds": 1,
+  "votes_observed": {"agree": 3, "idle": 2},
+  "rule_id": 2,
+  "semantic_state": "CLEAR",
+  "status_name": "BLOCKED",
+  "relation_id": 1,
+  "relation_kind": "CONFLICT",
+  "initial_resolution": "UNRESOLVED",
+  "conflict_type": "MODAL"
+}

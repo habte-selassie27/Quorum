@@ -1,0 +1,13 @@
+{
+  "source_commit": "bd6682d81afa7063d6b595dcdab04d220aed8bbb",
+  "network": "GenLayer StudioNet",
+  "cli_version": "0.39.1",
+  "deployer": "0xA7EeAE0E93793e3146Cb14b0700251B8b0EBADFB",
+  "contract_address": "0x67a027446838296FcB3022B376c8ff3873a4566C",
+  "deployment_tx": "0xacfed35041fae0ca9224ab07034838145f51c2f112809e8b968814be5584a2f2",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "execution_stdout": "",
+  "execution_stderr": "",
+  "notes": "Sanitized from observed GenLayer CLI output; independent public RPC status was 0x1 and contractAddress was null in this receipt format."
+}

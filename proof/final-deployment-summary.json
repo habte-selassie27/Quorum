@@ -1,0 +1,11 @@
+{
+  "source_commit": "bd6682d81afa7063d6b595dcdab04d220aed8bbb",
+  "network": "studionet",
+  "contract_address": "0x67a027446838296FcB3022B376c8ff3873a4566C",
+  "tx_hash": "0xacfed35041fae0ca9224ab07034838145f51c2f112809e8b968814be5584a2f2",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "execution": "SUCCESS",
+  "rounds": 1,
+  "votes_observed": {"agree": 3, "idle": 2}
+}

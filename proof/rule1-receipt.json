@@ -1,0 +1,16 @@
+{
+  "contract_address": "0x44fB5C44bfB81c2790AC14ab8b4167e25943eCAA",
+  "historical_deployment": true,
+  "rulebook_id": 2,
+  "rule_id": 3,
+  "tx": "0xa4c252f40b98ead5a6bae2af60cf0493960f6ae2ae56094777f15fc8a6918c06",
+  "method": "propose_rule",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "state_after": {
+    "active_count": 1,
+    "blocked_count": 0,
+    "standard_version": 1,
+    "standard_hash": "5202f13875fc753031ad2951be91637908a165ae537ddf391878f335aa968745"
+  }
+}

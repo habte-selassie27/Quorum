@@ -1,0 +1,12 @@
+{
+  "contract_address": "0x44fB5C44bfB81c2790AC14ab8b4167e25943eCAA",
+  "historical_deployment": true,
+  "rulebook_id": 2,
+  "rule_id": 4,
+  "tx": "0x4429817be6d9c0c348f8674e7dc395f17e65ec7f50636ae2242198450a268252",
+  "method": "set_blocked_rule_priority",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "priority_after": 200,
+  "same_relation_after": "CONFLICT / RIGHT_PREVAILS"
+}

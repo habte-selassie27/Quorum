@@ -1,0 +1,14 @@
+{
+  "source_commit": "bd6682d81afa7063d6b595dcdab04d220aed8bbb",
+  "contract_address": "0x67a027446838296FcB3022B376c8ff3873a4566C",
+  "tx_hash": "0x5925745612a28ebea221145467437dded0d8de736907a4b3398b7b2aa13b848f",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "execution": "SUCCESS",
+  "rounds": 1,
+  "votes_observed": {"agree": 3, "disagree": 1, "idle": 1},
+  "rule_id": 1,
+  "semantic_state": "CLEAR",
+  "status_name": "ACTIVE",
+  "standard_version": 1
+}

@@ -1,0 +1,16 @@
+{
+  "contract_address": "0x44fB5C44bfB81c2790AC14ab8b4167e25943eCAA",
+  "historical_deployment": true,
+  "rulebook_id": 2,
+  "tx": "0xbc95c28953b85e00447979bd0aa1b6a105f9c997c62b8a01988382bd0bb9d5e0",
+  "method": "create_rulebook",
+  "status": "FINALIZED",
+  "result": "MAJORITY_AGREE",
+  "strict_mode": true,
+  "state_after": {
+    "revision": 1,
+    "standard_version": 0,
+    "standard_status": "COHERENT",
+    "consistent": true
+  }
+}

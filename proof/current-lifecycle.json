@@ -1,0 +1,24 @@
+{
+  "source_commit": "bd6682d81afa7063d6b595dcdab04d220aed8bbb",
+  "contract_address": "0x67a027446838296FcB3022B376c8ff3873a4566C",
+  "rulebook_id": 1,
+  "transactions": {
+    "create_rulebook": "0x9a7f171de158b3096b70b224ee70369e68740bc606bcfb7806a70d67bc2852e4",
+    "rule_a": "0x5925745612a28ebea221145467437dded0d8de736907a4b3398b7b2aa13b848f",
+    "rule_b_conflict": "0x79ffc24bc6f70a2ca1b271851e245c5571586395d8b0e402a369de010b930340",
+    "priority_update": "0x7b60cbeb65805a5c8a4a5c7820d672bb5bef222bb70af0633efdc5d1d9e71525",
+    "activation": "0x8becc751189a7074526264ef92f770be35c9cd7e03e52fa518e4f9468701477d"
+  },
+  "observed_state": {
+    "active_count": 2,
+    "blocked_count": 0,
+    "standard_version": 2,
+    "standard_hash": "8b3e00983548ade2b9a799cf960a7b47639def3eb535fa6e4c17649b2e285438",
+    "standard_status": "RESOLVED_CONFLICTS",
+    "relation": "CONFLICT / RIGHT_PREVAILS",
+    "resolved_conflicts": 1,
+    "unresolved_conflicts": 0,
+    "exact_pin": true,
+    "stale_pin": false
+  }
+}
