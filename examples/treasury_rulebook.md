@@ -1,6 +1,14 @@
-# Treasury Rulebook Example
+# Quorum Treasury Rulebook Example
 
-This example demonstrates the difference between semantic conflict detection and deterministic precedence.
+This example demonstrates the difference between semantic conflict detection and deterministic precedence. It targets the renamed Quorum project and its current official StudioNet deployment, rather than the former Concord deployment.
+
+## Current deployment
+
+- Contract: [`0x367094ed37C0b0C3fC33F378cFCa0b874f41F473`](https://explorer-studio.genlayer.com/address/0x367094ed37C0b0C3fC33F378cFCa0b874f41F473)
+- Explorer: https://explorer-studio.genlayer.com/address/0x367094ed37C0b0C3fC33F378cFCa0b874f41F473
+- Studio import: https://studio.genlayer.com/?import-contract=0x367094ed37C0b0C3fC33F378cFCa0b874f41F473
+
+The deployment above is the current Quorum source. Historical, pre-rename evidence remains under [`proof/`](../proof/).
 
 ## Create rulebook
 
