@@ -233,6 +233,7 @@ docs/ARCHITECTURE.md
 docs/CONSENSUS.md
 docs/INTEGRATION.md
 docs/THREAT_MODEL.md
+docs/images/terminal/
 examples/treasury_rulebook.md
 SUBMISSION.md
 DEPLOYMENT.md
@@ -272,6 +273,191 @@ scripts/smoke.sh --write    # full write lifecycle, then the views (spends fees)
 ```
 
 The individual `genlayer write` / `genlayer call` commands for all 6 write and 11 read methods are listed in [`DEPLOYMENT.md`](DEPLOYMENT.md#runtime-smoke-sequence).
+
+## StudioNet terminal walkthrough
+
+The captures below come from an actual StudioNet terminal session using the active Rabby account. The contract starts empty, so run the write sequence first; it creates rulebook `1` and rules `1`–`4`. Wait for `FINALIZED` after every write before starting the next dependent operation.
+
+The full command sheet is in [`DEPLOYMENT.md`](DEPLOYMENT.md#runtime-smoke-sequence). The captures are retained in `docs/images/terminal/`.
+
+Consensus is model-dependent. In this capture, Rule C was accepted as `ACTIVE` rather than `BLOCKED`, so the priority-update and activation writes returned execution errors. The readbacks still completed and showed a coherent standard. Use the Direct Mode suite for deterministic lifecycle assertions.
+
+### Setup
+
+```bash
+cd /home/izzy/Music/Quorum
+genlayer network set studionet
+genlayer account use rabby
+genlayer account unlock --account rabby
+genlayer account show
+export QUORUM_CONTRACT="0x367094ed37C0b0C3fC33F378cFCa0b874f41F473"
+BOOK_ID=1
+RULE_A_ID=1
+RULE_B_ID=2
+BLOCKED_RULE_ID=3
+AMENDMENT_RULE_ID=4
+RELATION_ID=1
+wait_tx() { genlayer receipt "$1" --status FINALIZED --retries 60 --interval 3000; }
+```
+
+### Write sequence
+
+Run each command, copy its printed `Write Transaction Hash`, set `TX_HASH` to that value without `<` or `>`, then run `wait_tx "$TX_HASH"` before continuing.
+
+```bash
+genlayer write "$QUORUM_CONTRACT" create_rulebook \
+  --args "Treasury Constitution" \
+  "Rules governing treasury withdrawals, emergency authority, approvals, and execution constraints for a protocol treasury." \
+  true
+
+genlayer write "$QUORUM_CONTRACT" propose_rule \
+  --args "$BOOK_ID" \
+  "A treasury withdrawal must not execute when fewer than three approvals are present." \
+  100 0
+
+genlayer write "$QUORUM_CONTRACT" propose_rule \
+  --args "$BOOK_ID" \
+  "Withdrawals above 10000 USD require three approvals before execution." \
+  100 0
+
+genlayer write "$QUORUM_CONTRACT" propose_rule \
+  --args "$BOOK_ID" \
+  "During an active exploit the security council may execute a withdrawal without three approvals." \
+  100 0
+
+genlayer write "$QUORUM_CONTRACT" set_blocked_rule_priority \
+  --args "$BLOCKED_RULE_ID" 200
+
+genlayer write "$QUORUM_CONTRACT" activate_blocked_rule \
+  --args "$BLOCKED_RULE_ID"
+
+genlayer write "$QUORUM_CONTRACT" propose_rule \
+  --args "$BOOK_ID" \
+  "A treasury withdrawal must not execute when fewer than four approvals are present." \
+  100 "$RULE_A_ID"
+
+genlayer write "$QUORUM_CONTRACT" repeal_rule \
+  --args "$AMENDMENT_RULE_ID"
+
+genlayer write "$QUORUM_CONTRACT" restore_superseded_rule \
+  --args "$RULE_A_ID"
+```
+
+### Read sequence
+
+```bash
+genlayer call "$QUORUM_CONTRACT" get_rulebook --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" get_rule --args "$RULE_A_ID"
+genlayer call "$QUORUM_CONTRACT" get_relation --args "$RELATION_ID"
+genlayer call "$QUORUM_CONTRACT" relation_between --args "$RULE_A_ID" "$BLOCKED_RULE_ID"
+genlayer call "$QUORUM_CONTRACT" get_standard --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" get_standard_relations --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" standard_status --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" blocking_reason --args "$BLOCKED_RULE_ID"
+genlayer call "$QUORUM_CONTRACT" is_consistent --args "$BOOK_ID"
+genlayer call "$QUORUM_CONTRACT" current_standard_hash --args "$BOOK_ID"
+
+STANDARD_HASH="$(genlayer call "$QUORUM_CONTRACT" current_standard_hash \
+  --args "$BOOK_ID" | awk '/^Result:/{getline; print; exit}')"
+printf '%s\n' "$STANDARD_HASH"
+genlayer call "$QUORUM_CONTRACT" is_consistent_for \
+  --args "$BOOK_ID" "$STANDARD_HASH"
+```
+
+### Selected captures
+
+![StudioNet network selection](docs/images/terminal/2026-09-26-05-54-57.png)
+
+![Rulebook creation and Rabby-signed write](docs/images/terminal/2026-09-26-06-11-38.png)
+
+![Final standard pin verification](docs/images/terminal/2026-09-26-06-35-20.png)
+
+<details>
+<summary>Full terminal capture gallery (38 screenshots)</summary>
+
+### Setup captures
+
+![Network selection](docs/images/terminal/2026-09-26-05-54-57.png)
+
+![Rabby account selection](docs/images/terminal/2026-09-26-05-55-10.png)
+
+![Rabby unlock](docs/images/terminal/2026-09-26-05-55-25.png)
+
+![Contract address export](docs/images/terminal/2026-09-26-05-55-37.png)
+
+![IDs and receipt helper](docs/images/terminal/2026-09-26-06-11-11.png)
+
+### Write captures
+
+![Create rulebook command](docs/images/terminal/2026-09-26-06-11-38.png)
+
+![Create rulebook receipt](docs/images/terminal/2026-09-26-06-11-50.png)
+
+![Create rulebook receipt continuation](docs/images/terminal/2026-09-26-06-13-48.png)
+
+![Rule A write](docs/images/terminal/2026-09-26-06-13-56.png)
+
+![Rule B write](docs/images/terminal/2026-09-26-06-15-55.png)
+
+![Rule B receipt continuation](docs/images/terminal/2026-09-26-06-16-02.png)
+
+![Rule C write](docs/images/terminal/2026-09-26-06-18-53.png)
+
+![Rule C receipt continuation](docs/images/terminal/2026-09-26-06-19-00.png)
+
+![Rule status readback](docs/images/terminal/2026-09-26-06-19-29.png)
+
+![Blocking reason readback](docs/images/terminal/2026-09-26-06-19-52.png)
+
+![Priority update attempt](docs/images/terminal/2026-09-26-06-20-45.png)
+
+![Priority update receipt continuation](docs/images/terminal/2026-09-26-06-20-53.png)
+
+![Activation attempt](docs/images/terminal/2026-09-26-06-21-34.png)
+
+![Activation receipt continuation](docs/images/terminal/2026-09-26-06-21-40.png)
+
+![Amendment write](docs/images/terminal/2026-09-26-06-25-58.png)
+
+![Amendment receipt continuation](docs/images/terminal/2026-09-26-06-26-06.png)
+
+![Repeal attempt](docs/images/terminal/2026-09-26-06-26-36.png)
+
+![Repeal receipt continuation](docs/images/terminal/2026-09-26-06-26-42.png)
+
+![Restore attempt](docs/images/terminal/2026-09-26-06-27-12.png)
+
+![Restore receipt continuation](docs/images/terminal/2026-09-26-06-27-24.png)
+
+### Read captures
+
+![Rulebook readback](docs/images/terminal/2026-09-26-06-28-28.png)
+
+![Rule readback](docs/images/terminal/2026-09-26-06-28-48.png)
+
+![Relation readback](docs/images/terminal/2026-09-26-06-29-06.png)
+
+![Relation between rules](docs/images/terminal/2026-09-26-06-29-18.png)
+
+![Standard rules](docs/images/terminal/2026-09-26-06-30-19.png)
+
+![Standard relations](docs/images/terminal/2026-09-26-06-30-46.png)
+
+![Standard status](docs/images/terminal/2026-09-26-06-31-18.png)
+
+![Blocking reason](docs/images/terminal/2026-09-26-06-32-46.png)
+
+![Consistency check](docs/images/terminal/2026-09-26-06-33-14.png)
+
+![Current standard hash](docs/images/terminal/2026-09-26-06-33-41.png)
+
+![Hash capture command](docs/images/terminal/2026-09-26-06-34-26.png)
+
+![Captured hash output](docs/images/terminal/2026-09-26-06-34-45.png)
+
+![Exact standard pin](docs/images/terminal/2026-09-26-06-35-20.png)
+
+</details>
 
 ## Deployment
 
