@@ -233,8 +233,7 @@ docs/ARCHITECTURE.md
 docs/CONSENSUS.md
 docs/INTEGRATION.md
 docs/THREAT_MODEL.md
-docs/images/terminal/
-examples/treasury_rulebook.md
+examples/
 SUBMISSION.md
 DEPLOYMENT.md
 ```
@@ -278,7 +277,7 @@ The individual `genlayer write` / `genlayer call` commands for all 6 write and 1
 
 The captures below come from an actual StudioNet terminal session using the active Rabby account. The contract starts empty, so run the write sequence first; it creates rulebook `1` and rules `1`–`4`. Wait for `FINALIZED` after every write before starting the next dependent operation.
 
-The full command sheet is in [`DEPLOYMENT.md`](DEPLOYMENT.md#runtime-smoke-sequence). The captures are retained in `docs/images/terminal/`.
+The full command sheet is in [`DEPLOYMENT.md`](DEPLOYMENT.md#runtime-smoke-sequence). The captures are retained in `examples/`.
 
 Consensus is model-dependent. In this capture, Rule C was accepted as `ACTIVE` rather than `BLOCKED`, so the priority-update and activation writes returned execution errors. The readbacks still completed and showed a coherent standard. Use the Direct Mode suite for deterministic lifecycle assertions.
 
@@ -366,96 +365,96 @@ genlayer call "$QUORUM_CONTRACT" is_consistent_for \
 
 ### Selected captures
 
-![StudioNet network selection](docs/images/terminal/2026-09-26-05-54-57.png)
+![StudioNet network selection](examples/2026-09-26-05-54-57.png)
 
-![Rulebook creation and Rabby-signed write](docs/images/terminal/2026-09-26-06-11-38.png)
+![Rulebook creation and Rabby-signed write](examples/2026-09-26-06-11-38.png)
 
-![Final standard pin verification](docs/images/terminal/2026-09-26-06-35-20.png)
+![Final standard pin verification](examples/2026-09-26-06-35-20.png)
 
 <details>
 <summary>Full terminal capture gallery (38 screenshots)</summary>
 
 ### Setup captures
 
-![Network selection](docs/images/terminal/2026-09-26-05-54-57.png)
+![Network selection](examples/2026-09-26-05-54-57.png)
 
-![Rabby account selection](docs/images/terminal/2026-09-26-05-55-10.png)
+![Rabby account selection](examples/2026-09-26-05-55-10.png)
 
-![Rabby unlock](docs/images/terminal/2026-09-26-05-55-25.png)
+![Rabby unlock](examples/2026-09-26-05-55-25.png)
 
-![Contract address export](docs/images/terminal/2026-09-26-05-55-37.png)
+![Contract address export](examples/2026-09-26-05-55-37.png)
 
-![IDs and receipt helper](docs/images/terminal/2026-09-26-06-11-11.png)
+![IDs and receipt helper](examples/2026-09-26-06-11-11.png)
 
 ### Write captures
 
-![Create rulebook command](docs/images/terminal/2026-09-26-06-11-38.png)
+![Create rulebook command](examples/2026-09-26-06-11-38.png)
 
-![Create rulebook receipt](docs/images/terminal/2026-09-26-06-11-50.png)
+![Create rulebook receipt](examples/2026-09-26-06-11-50.png)
 
-![Create rulebook receipt continuation](docs/images/terminal/2026-09-26-06-13-48.png)
+![Create rulebook receipt continuation](examples/2026-09-26-06-13-48.png)
 
-![Rule A write](docs/images/terminal/2026-09-26-06-13-56.png)
+![Rule A write](examples/2026-09-26-06-13-56.png)
 
-![Rule B write](docs/images/terminal/2026-09-26-06-15-55.png)
+![Rule B write](examples/2026-09-26-06-15-55.png)
 
-![Rule B receipt continuation](docs/images/terminal/2026-09-26-06-16-02.png)
+![Rule B receipt continuation](examples/2026-09-26-06-16-02.png)
 
-![Rule C write](docs/images/terminal/2026-09-26-06-18-53.png)
+![Rule C write](examples/2026-09-26-06-18-53.png)
 
-![Rule C receipt continuation](docs/images/terminal/2026-09-26-06-19-00.png)
+![Rule C receipt continuation](examples/2026-09-26-06-19-00.png)
 
-![Rule status readback](docs/images/terminal/2026-09-26-06-19-29.png)
+![Rule status readback](examples/2026-09-26-06-19-29.png)
 
-![Blocking reason readback](docs/images/terminal/2026-09-26-06-19-52.png)
+![Blocking reason readback](examples/2026-09-26-06-19-52.png)
 
-![Priority update attempt](docs/images/terminal/2026-09-26-06-20-45.png)
+![Priority update attempt](examples/2026-09-26-06-20-45.png)
 
-![Priority update receipt continuation](docs/images/terminal/2026-09-26-06-20-53.png)
+![Priority update receipt continuation](examples/2026-09-26-06-20-53.png)
 
-![Activation attempt](docs/images/terminal/2026-09-26-06-21-34.png)
+![Activation attempt](examples/2026-09-26-06-21-34.png)
 
-![Activation receipt continuation](docs/images/terminal/2026-09-26-06-21-40.png)
+![Activation receipt continuation](examples/2026-09-26-06-21-40.png)
 
-![Amendment write](docs/images/terminal/2026-09-26-06-25-58.png)
+![Amendment write](examples/2026-09-26-06-25-58.png)
 
-![Amendment receipt continuation](docs/images/terminal/2026-09-26-06-26-06.png)
+![Amendment receipt continuation](examples/2026-09-26-06-26-06.png)
 
-![Repeal attempt](docs/images/terminal/2026-09-26-06-26-36.png)
+![Repeal attempt](examples/2026-09-26-06-26-36.png)
 
-![Repeal receipt continuation](docs/images/terminal/2026-09-26-06-26-42.png)
+![Repeal receipt continuation](examples/2026-09-26-06-26-42.png)
 
-![Restore attempt](docs/images/terminal/2026-09-26-06-27-12.png)
+![Restore attempt](examples/2026-09-26-06-27-12.png)
 
-![Restore receipt continuation](docs/images/terminal/2026-09-26-06-27-24.png)
+![Restore receipt continuation](examples/2026-09-26-06-27-24.png)
 
 ### Read captures
 
-![Rulebook readback](docs/images/terminal/2026-09-26-06-28-28.png)
+![Rulebook readback](examples/2026-09-26-06-28-28.png)
 
-![Rule readback](docs/images/terminal/2026-09-26-06-28-48.png)
+![Rule readback](examples/2026-09-26-06-28-48.png)
 
-![Relation readback](docs/images/terminal/2026-09-26-06-29-06.png)
+![Relation readback](examples/2026-09-26-06-29-06.png)
 
-![Relation between rules](docs/images/terminal/2026-09-26-06-29-18.png)
+![Relation between rules](examples/2026-09-26-06-29-18.png)
 
-![Standard rules](docs/images/terminal/2026-09-26-06-30-19.png)
+![Standard rules](examples/2026-09-26-06-30-19.png)
 
-![Standard relations](docs/images/terminal/2026-09-26-06-30-46.png)
+![Standard relations](examples/2026-09-26-06-30-46.png)
 
-![Standard status](docs/images/terminal/2026-09-26-06-31-18.png)
+![Standard status](examples/2026-09-26-06-31-18.png)
 
-![Blocking reason](docs/images/terminal/2026-09-26-06-32-46.png)
+![Blocking reason](examples/2026-09-26-06-32-46.png)
 
-![Consistency check](docs/images/terminal/2026-09-26-06-33-14.png)
+![Consistency check](examples/2026-09-26-06-33-14.png)
 
-![Current standard hash](docs/images/terminal/2026-09-26-06-33-41.png)
+![Current standard hash](examples/2026-09-26-06-33-41.png)
 
-![Hash capture command](docs/images/terminal/2026-09-26-06-34-26.png)
+![Hash capture command](examples/2026-09-26-06-34-26.png)
 
-![Captured hash output](docs/images/terminal/2026-09-26-06-34-45.png)
+![Captured hash output](examples/2026-09-26-06-34-45.png)
 
-![Exact standard pin](docs/images/terminal/2026-09-26-06-35-20.png)
+![Exact standard pin](examples/2026-09-26-06-35-20.png)
 
 </details>
 

@@ -80,7 +80,7 @@ CLI version: <version>
 
 ## Runtime smoke sequence
 
-After deployment, use the Studio or CLI to execute the lifecycle in `examples/treasury_rulebook.md`.
+After deployment, use the Studio or CLI to execute the lifecycle documented in the [terminal walkthrough](README.md#studionet-terminal-walkthrough).
 The complete sequence is scripted in [`scripts/smoke.sh`](scripts/smoke.sh):
 
 ```bash
